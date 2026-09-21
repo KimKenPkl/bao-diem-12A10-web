@@ -283,7 +283,7 @@ function render(){
   document.getElementById("sTBB").textContent=fnum(avg(l4.map(h=>h.b00)));
   document.getElementById("sMaxB").textContent=fnum(Math.max(...l4.map(h=>h.b00??-1).filter(v=>v>=0)));
   const f=ALL_HS.filter(h=>{if(!q)return true;const p=getPhones(h.hoten);return h.hoten.toLowerCase().includes(q)||h.sbd.includes(q)||(p.cha&&p.cha.includes(q))||(p.me&&p.me.includes(q));});
-  document.getElementById("dem").textContent=f.length+" / "+ALL_HS.length+" em • đủ "+LANS.length+" Lần/tin";
+  document.getElementById("dem").textContent=f.length+" / "+ALL_HS.length+" em • "+(SEND_MODE==="single"?LAN+" riêng":"đủ "+LANS.length+" Lần/tin");
   document.getElementById("phoneNote").textContent=hasPhoneFile()?"Đã nạp SĐT ba/mẹ (bản local).":"Bản public đang ẩn SĐT.";
   const g=document.getElementById("grid");g.innerHTML="";
   f.forEach(em=>{
@@ -294,13 +294,25 @@ function render(){
     const newest=em.recs["Lần 4"]||em.recs["Lần 3"]||{};
     const xhRow=LANS.map(lan=>{const h=em.recs[lan];const t=h&&h.xh!=null?h.xh+"/33":"—";return `<span class="xh-chip">${lan.replace("Lần ","Hạng L")}: ${t}</span>`;}).join("");
     const d=document.createElement("div");d.className="hs";
-    d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • Tổng B mới nhất: <b>${diemTxt(newest.b00)}</b></span></div></div>
+    if(SEND_MODE==="single"){
+      const h=em.recs[LAN]||{};
+      const xh1=h.xh!=null?`<span class="xh-chip">Hạng ${LAN.replace("Lần ","L")}: ${h.xh}/33</span>`:`<span class="xh-chip">${LAN}: chưa có XH</span>`;
+      d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • ${LAN}</span></div></div>
+      <div class="xh-row">${xh1}</div>
+      <div class="diem"><div>Toán: <b>${diemTxt(h.toan)}</b></div><div>Hoá: <b>${diemTxt(h.hoa)}</b></div><div>Sinh: <b>${diemTxt(h.sinh)}</b></div><div>Văn: <b>${diemTxt(h.van)}</b></div></div>
+      <div class="diem"><div class="tong" style="grid-column:1/-1">Tổng khối B ${LAN.replace("Lần ","L")}: ${diemTxt(h.b00)}</div></div>
+      <div class="hint"><b>XH</b> chỉ hiện trên web — <b>tin nhắn + ảnh gửi PH không có XH</b>.</div>
+      ${phoneHTML(em)}
+      <div class="row2"><button class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>${SEND_MODE==="single"?"Copy "+LAN:"Copy đủ "+LANS.length+" Lần"}</button><button class="btn btn-soft" data-act="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Tải ảnh${SEND_MODE==="single"?" "+LAN:""}</button><button class="btn btn-soft" data-act="view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Xem trước</button></div>`;
+    }else{
+      d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • Tổng B mới nhất: <b>${diemTxt(newest.b00)}</b></span></div></div>
       <div class="xh-row">${xhRow}</div>
       <div class="spark" title="Tổng khối B qua các Lần">${bars}</div>
       <table class="mini"><tr><th>Lần</th><th>Toán</th><th>Hoá</th><th>Sinh</th><th>Văn</th><th>Tổng B</th><th>XH</th></tr>${rows}</table>
       <div class="hint">Cột <b>XH</b> chỉ hiện trên web cho thầy theo dõi — <b>tin nhắn + ảnh gửi PH không có XH</b>.</div>
       ${phoneHTML(em)}
       <div class="row2"><button class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>${SEND_MODE==="single"?"Copy "+LAN:"Copy đủ "+LANS.length+" Lần"}</button><button class="btn btn-soft" data-act="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Tải ảnh${SEND_MODE==="single"?" "+LAN:""}</button><button class="btn btn-soft" data-act="view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Xem trước</button></div>`;
+    }
     const [b1,b2,b3]=d.querySelectorAll("button");
     b1.onclick=async()=>{const m=msgFor(em.sbd);const ok=await copyText(m);toast(ok?(SEND_MODE==="single"?`Đã copy ${LAN} của ${em.hoten} — dán qua Zalo!`:`Đã copy đủ ${LANS.length} Lần của ${em.hoten} — dán qua Zalo!`):"Không copy tự động, bấm Xem trước để copy tay.");};
     b2.onclick=()=>{downloadCard(em.sbd);};
