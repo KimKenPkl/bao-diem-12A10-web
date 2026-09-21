@@ -96,6 +96,9 @@ body{font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Arial,sans-
 [data-theme="dark"] .tag{background:rgba(201,162,39,.15);color:#FDE68A;border-color:rgba(201,162,39,.4)}
 .row2{display:flex;gap:8px;flex-wrap:wrap}.row2 .btn{flex:1;min-width:140px}
 .xh-badge{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:3px 10px;background:linear-gradient(135deg,#4F46E5,#7C3AED);color:#fff;margin-left:6px;vertical-align:middle}
+.xh-row{display:flex;gap:6px;flex-wrap:wrap}
+.xh-chip{font-size:11px;font-weight:700;background:#F1F0FF;color:#5B21B6;border:1px solid #DDD6FE;border-radius:999px;padding:3px 10px}
+[data-theme="dark"] .xh-chip{background:rgba(124,58,237,.15);color:#C4B5FD;border-color:rgba(124,58,237,.4)}
 /* modal + toast */
 .modal{display:none;position:fixed;inset:0;background:rgba(8,12,26,.6);backdrop-filter:blur(6px);z-index:100;padding:16px;overflow:auto}
 .modal.open{display:block;animation:fade .2s}
@@ -270,9 +273,10 @@ function render(){
     const bars=LANS.map((l,i)=>{const v=bvals[i];const h=v==null?6:Math.max(10,Math.round(v/mx*44));return `<div class="bar${v==null?" dim":""}" style="height:${h}px"><i>${v==null?"—":fnum(v)}</i></div>`;}).join("");
     const rows=LANS.map(lan=>{const h=em.recs[lan];if(!h)return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td colspan="6">—</td></tr>`;const xh=h.xh!=null?h.xh+"/"+"33":"—";return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td>${diemTxt(h.toan)}</td><td>${diemTxt(h.hoa)}</td><td>${diemTxt(h.sinh)}</td><td>${diemTxt(h.van)}</td><td><b>${diemTxt(h.b00)}</b></td><td style="color:#6D28D9;font-weight:800">${xh}</td></tr>`;}).join("");
     const newest=em.recs["Lần 4"]||em.recs["Lần 3"]||{};
-    const xhNew=newest.xh!=null?`<span class="xh-badge">Hạng L4: ${newest.xh}/33</span>`:"";
+    const xhRow=LANS.map(lan=>{const h=em.recs[lan];const t=h&&h.xh!=null?h.xh+"/33":"—";return `<span class="xh-chip">${lan.replace("Lần ","Hạng L")}: ${t}</span>`;}).join("");
     const d=document.createElement("div");d.className="hs";
-    d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}${xhNew}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • Tổng B mới nhất: <b>${diemTxt(newest.b00)}</b></span></div></div>
+    d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • Tổng B mới nhất: <b>${diemTxt(newest.b00)}</b></span></div></div>
+      <div class="xh-row">${xhRow}</div>
       <div class="spark" title="Tổng khối B qua các Lần">${bars}</div>
       <table class="mini"><tr><th>Lần</th><th>Toán</th><th>Hoá</th><th>Sinh</th><th>Văn</th><th>Tổng B</th><th>XH</th></tr>${rows}</table>
       <div class="hint">Cột <b>XH</b> chỉ hiện trên web cho thầy theo dõi — <b>tin nhắn + ảnh gửi PH không có XH</b>.</div>
