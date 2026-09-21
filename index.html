@@ -94,7 +94,8 @@ body{font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Arial,sans-
 .mini td b{font-size:13px}
 .tag{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px;background:#FEF3C7;color:#92400E;border:1px solid #FCD34D}
 [data-theme="dark"] .tag{background:rgba(201,162,39,.15);color:#FDE68A;border-color:rgba(201,162,39,.4)}
-.row2{display:flex;gap:8px}.row2 .btn{flex:1}
+.row2{display:flex;gap:8px;flex-wrap:wrap}.row2 .btn{flex:1;min-width:140px}
+.xh-badge{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:3px 10px;background:linear-gradient(135deg,#4F46E5,#7C3AED);color:#fff;margin-left:6px;vertical-align:middle}
 /* modal + toast */
 .modal{display:none;position:fixed;inset:0;background:rgba(8,12,26,.6);backdrop-filter:blur(6px);z-index:100;padding:16px;overflow:auto}
 .modal.open{display:block;animation:fade .2s}
@@ -124,7 +125,7 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
       <button class="btn-ghost" id="themeBtn" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
     </div>
     <h1>Báo điểm <span class="gold">12A10</span> — 1 tin nhắn đủ 4 Lần</h1>
-    <p class="sub">Mỗi em 1 tin nhắn gồm <b>Lần 1 → Lần 4</b>, mỗi Lần gói gọn <b>1 hàng</b> (Toán – Hoá – Sinh – Văn – Tổng B). Không ghi thứ hạng, không nhận xét. Bấm copy là dán qua Zalo được ngay.</p>
+    <p class="sub">Mỗi em 1 tin nhắn gồm <b>Lần 1 → Lần 4</b>, mỗi Lần gói gọn <b>1 hàng</b> (Toán – Hoá – Sinh – Văn – Tổng B). <b>Web hiện xếp hạng</b> để thầy theo dõi, nhưng <b>tin nhắn + ảnh gửi PH không có xếp hạng</b>. Bấm copy / tải ảnh là gửi Zalo được ngay.</p>
     <div class="stat-row">
       <div class="stat"><small>Sĩ số</small><b id="sSiso">33</b><span>lớp 12A10</span></div>
       <div class="stat"><small>TB khối B (Lần 4)</small><b id="sTBB">—</b><span>Toán + Hoá + Sinh</span></div>
@@ -267,31 +268,90 @@ function render(){
     const bvals=LANS.map(l=>em.recs[l]?em.recs[l].b00:null);
     const mx=Math.max(...bvals.filter(v=>v!=null),1);
     const bars=LANS.map((l,i)=>{const v=bvals[i];const h=v==null?6:Math.max(10,Math.round(v/mx*44));return `<div class="bar${v==null?" dim":""}" style="height:${h}px"><i>${v==null?"—":fnum(v)}</i></div>`;}).join("");
-    const rows=LANS.map(lan=>{const h=em.recs[lan];if(!h)return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td colspan="4">—</td></tr>`;return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td>${diemTxt(h.toan)}</td><td>${diemTxt(h.hoa)}</td><td>${diemTxt(h.sinh)}</td><td><b>${diemTxt(h.b00)}</b></td></tr>`;}).join("");
-    const van1=em.recs["Lần 1"]?diemTxt(em.recs["Lần 1"].van):"—";
+    const rows=LANS.map(lan=>{const h=em.recs[lan];if(!h)return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td colspan="6">—</td></tr>`;const xh=h.xh!=null?h.xh+"/"+"33":"—";return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td>${diemTxt(h.toan)}</td><td>${diemTxt(h.hoa)}</td><td>${diemTxt(h.sinh)}</td><td>${diemTxt(h.van)}</td><td><b>${diemTxt(h.b00)}</b></td><td style="color:#6D28D9;font-weight:800">${xh}</td></tr>`;}).join("");
     const newest=em.recs["Lần 4"]||em.recs["Lần 3"]||{};
+    const xhNew=newest.xh!=null?`<span class="xh-badge">Hạng L4: ${newest.xh}/33</span>`:"";
     const d=document.createElement("div");d.className="hs";
-    d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • Tổng B mới nhất: <b>${diemTxt(newest.b00)}</b></span></div></div>
+    d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}${xhNew}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • Tổng B mới nhất: <b>${diemTxt(newest.b00)}</b></span></div></div>
       <div class="spark" title="Tổng khối B qua các Lần">${bars}</div>
-      <table class="mini"><tr><th>Lần</th><th>Toán</th><th>Hoá</th><th>Sinh</th><th>Tổng B</th></tr>${rows}</table>
-      <div><span class="tag">Văn Lần 1: ${van1}</span></div>
+      <table class="mini"><tr><th>Lần</th><th>Toán</th><th>Hoá</th><th>Sinh</th><th>Văn</th><th>Tổng B</th><th>XH</th></tr>${rows}</table>
+      <div class="hint">Cột <b>XH</b> chỉ hiện trên web cho thầy theo dõi — <b>tin nhắn + ảnh gửi PH không có XH</b>.</div>
       ${phoneHTML(em)}
-      <div class="row2"><button class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy đủ ${LANS.length} Lần</button><button class="btn btn-soft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Xem trước</button></div>`;
-    const [b1,b2]=d.querySelectorAll("button");
+      <div class="row2"><button class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy đủ ${LANS.length} Lần</button><button class="btn btn-soft" data-act="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Tải ảnh</button><button class="btn btn-soft" data-act="view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Xem trước</button></div>`;
+    const [b1,b2,b3]=d.querySelectorAll("button");
     b1.onclick=async()=>{const m=makeFullMsg(em.sbd);const ok=await copyText(m);toast(ok?`Đã copy đủ ${LANS.length} Lần của ${em.hoten} — dán qua Zalo!`:"Không copy tự động, bấm Xem trước để copy tay.");};
-    b2.onclick=()=>{const m=makeFullMsg(em.sbd);lastMsg=m;document.getElementById("mTitle").textContent=em.hoten+" — đủ "+LANS.length+" Lần";document.getElementById("mBody").textContent=m;document.getElementById("modal").classList.add("open");};
+    b2.onclick=()=>{downloadCard(em.sbd);};
+    b3.onclick=()=>{const m=makeFullMsg(em.sbd);lastMsg=m;document.getElementById("mTitle").textContent=em.hoten+" — đủ "+LANS.length+" Lần";document.getElementById("mBody").textContent=m;document.getElementById("modal").classList.add("open");};
     g.appendChild(d);
   });
   if(!f.length)g.innerHTML="<p class='hint'>Không tìm thấy em nào. Thử từ khoá khác.</p>";
   observe();
 }
 function escapeHtml(s){return String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function fileName(sbd){
+  const em=bySBD[sbd];
+  const koDau=String(em.hoten||"HS").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").replace(/[^A-Za-z0-9]+/g,"");
+  return `PhieuDiem_12A10_L1-L${LANS.length}_${koDau}_${em.sbd}.png`;
+}
+/* Xuat anh phieu diem (KHONG XH - giong tin nhan gui PH), tu dat ten file */
+function downloadCard(sbd){
+  try{
+  const em=bySBD[sbd], gvcn=(document.getElementById("gvcn").value||"").trim();
+  const W=1080, rowH=86, topH=300, footH=170;
+  const H=topH+LANS.length*rowH+footH;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;
+  const x=cv.getContext("2d");
+  x.fillStyle="#FFFFFF";x.fillRect(0,0,W,H);
+  const gr=x.createLinearGradient(0,0,W,0);gr.addColorStop(0,"#131E3A");gr.addColorStop(.55,"#2B2A7A");gr.addColorStop(1,"#6D28D9");
+  x.fillStyle=gr;x.fillRect(0,0,W,210);
+  x.fillStyle="#C9A227";x.font="800 40px 'Be Vietnam Pro', Arial";x.textAlign="center";
+  x.fillText("TRƯỜNG THPT CHI LĂNG — LỚP 12A10",W/2,70);
+  x.fillStyle="#FFFFFF";x.font="700 44px 'Be Vietnam Pro', Arial";
+  x.fillText("PHIẾU ĐIỂM KTĐK (LẦN 1 → LẦN "+LANS.length+")",W/2,135);
+  x.font="500 30px 'Be Vietnam Pro', Arial";x.fillStyle="rgba(255,255,255,.9)";
+  x.fillText("Mỗi Lần 1 hàng • Không xếp hạng",W/2,180);
+  x.textAlign="left";x.fillStyle="#16213A";
+  x.font="800 42px 'Be Vietnam Pro', Arial";
+  x.fillText(em.hoten,60,275);
+  x.font="500 30px 'Be Vietnam Pro', Arial";x.fillStyle="#5B6B8C";
+  x.fillText("SBD "+em.sbd,60,318);
+  // table
+  const cols=[["Lần",150],["Toán",130],["Hoá",130],["Sinh",130],["Văn",130],["Tổng B",230]];
+  let tx=60;const ty=topH;const tw=W-120;
+  x.font="800 28px 'Be Vietnam Pro', Arial";
+  // header
+  x.fillStyle="#1B2A4A";
+  roundRect(x,60,ty,tw,rowH,18);x.fill();
+  x.fillStyle="#fff";let cx=60;
+  const headers=["Lần","Toán","Hoá","Sinh","Văn","Tổng B"];
+  const widths=[150,130,130,130,130,230];
+  headers.forEach((h,i)=>{x.textAlign="center";x.fillText(h,cx+widths[i]/2,ty+55);cx+=widths[i];});
+  LANS.forEach((lan,i)=>{
+    const h=em.recs[lan]||{};const ry=ty+rowH*(i+1);
+    x.fillStyle=i%2?"#F4F6FB":"#FFFFFF";roundRect(x,60,ry+6,tw,rowH-12,14);x.fill();
+    x.strokeStyle="#E3E9F5";x.lineWidth=2;roundRect(x,60,ry+6,tw,rowH-12,14);x.stroke();
+    const vals=[lan.replace("Lần ","L"),diemTxt(h.toan),diemTxt(h.hoa),diemTxt(h.sinh),diemTxt(h.van),diemTxt(h.b00)];
+    let c2=60;
+    vals.forEach((v,j)=>{x.fillStyle=j===5?"#1B2A4A":"#16213A";x.font=(j===0||j===5)?"800 30px 'Be Vietnam Pro', Arial":"500 30px 'Be Vietnam Pro', Arial";x.textAlign="center";x.fillText(String(v),c2+widths[j]/2,ry+58);c2+=widths[j];});
+  });
+  const fy=topH+LANS.length*rowH+30;
+  x.textAlign="left";x.fillStyle="#5B6B8C";x.font="500 28px 'Be Vietnam Pro', Arial";
+  x.fillText("Kính mong phụ huynh nhắc nhở, động viên em ôn tập.",60,fy+30);
+  x.fillStyle="#16213A";x.font="700 30px 'Be Vietnam Pro', Arial";
+  x.fillText(gvcn?("Trân trọng! ("+gvcn+")"):"Trân trọng!",60,fy+75);
+  x.textAlign="right";x.fillStyle="#93A1C0";x.font="500 24px Arial";
+  x.fillText("12A10 • "+new Date().toLocaleDateString("vi-VN"),W-60,fy+75);
+  const a=document.createElement("a");a.download=fileName(sbd);a.href=cv.toDataURL("image/png");document.body.appendChild(a);a.click();a.remove();
+  toast("Đã tải ảnh "+a.download+" — gửi qua Zalo cho PH!");
+  }catch(e){toast("Không xuất được ảnh, thử lại giúp thầy.");}
+}
+function roundRect(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath();}
 async function copyModal(){const ok=await copyText(lastMsg);toast(ok?"Đã copy! Dán qua Zalo cho PH.":"Copy tay giúp thầy nhé.");}
 async function copyAll(){
   const list=DATA[LAN]||[];
   const hp=hasPhoneFile();
-  const lines=list.map(h=>{const p=hp?getPhones(h.hoten):{cha:"",me:""};return [h.sbd,h.hoten,diemTxt(h.toan),diemTxt(h.hoa),diemTxt(h.sinh),diemTxt(h.van),diemTxt(h.b00),p.cha||"",p.me||""].join("\t");});
-  const t=[`SBD\tHọ tên\tToán\tHoá\tSinh\tVăn\tTổng B (${LAN})\tĐT Ba\tĐT Mẹ`,...lines].join("\n");
+  const lines=list.map(h=>{const p=hp?getPhones(h.hoten):{cha:"",me:""};return [h.sbd,h.hoten,diemTxt(h.toan),diemTxt(h.hoa),diemTxt(h.sinh),diemTxt(h.van),diemTxt(h.b00),h.xh!=null?h.xh:"",p.cha||"",p.me||""].join("\t");});
+  const t=[`SBD\tHọ tên\tToán\tHoá\tSinh\tVăn\tTổng B (${LAN})\tXH\tĐT Ba\tĐT Mẹ`,...lines].join("\n");
   const ok=await copyText(t);toast(ok?`Đã copy bảng ${LAN} (${list.length} em${hp?", kèm SĐT":""})!`:"Không copy được.");
 }
 document.getElementById("themeBtn").onclick=()=>{const h=document.documentElement;const n=h.getAttribute("data-theme")==="light"?"dark":"light";h.setAttribute("data-theme",n);saveTheme(n);};
