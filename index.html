@@ -113,6 +113,11 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
 .phone .who{font-weight:700;color:var(--mut)}
 .pbtn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;color:var(--txt);font-family:inherit;text-decoration:none}
 .pbtn:hover{border-color:var(--indigo)}
+.hline{display:flex;gap:8px;overflow-x:auto;padding:2px}
+.hline .cell{flex:1 1 0;min-width:68px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;font-size:11.5px;color:var(--mut);white-space:nowrap}
+.hline .cell b{display:block;font-size:16px;color:var(--txt);margin-top:2px}
+.hline .cell.tong{background:#FFF7DB;border-color:#E0C96A}
+[data-theme="dark"] .hline .cell.tong{background:rgba(201,162,39,.15)}
 @media(max-width:760px){.toolbar-grid{grid-template-columns:1fr}.stat-row{grid-template-columns:repeat(2,1fr)}.row2{flex-direction:column}.wrap{padding:0 12px 70px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 :focus-visible{outline:3px solid var(--ring);outline-offset:2px}
@@ -299,8 +304,7 @@ function render(){
       const xh1=h.xh!=null?`<span class="xh-chip">Hạng ${LAN.replace("Lần ","L")}: ${h.xh}/33</span>`:`<span class="xh-chip">${LAN}: chưa có XH</span>`;
       d.innerHTML=`<div class="hs-top"><div class="avatar" style="background:${grad(em.sbd)}">${escapeHtml(initials(em.hoten))}</div><div><h3>${escapeHtml(em.hoten)}</h3><span class="sbd">SBD ${escapeHtml(em.sbd)} • ${LAN}</span></div></div>
       <div class="xh-row">${xh1}</div>
-      <div class="diem"><div>Toán: <b>${diemTxt(h.toan)}</b></div><div>Hoá: <b>${diemTxt(h.hoa)}</b></div><div>Sinh: <b>${diemTxt(h.sinh)}</b></div><div>Văn: <b>${diemTxt(h.van)}</b></div></div>
-      <div class="diem"><div class="tong" style="grid-column:1/-1">Tổng khối B ${LAN.replace("Lần ","L")}: ${diemTxt(h.b00)}</div></div>
+      <div class="hline"><div class="cell">Toán<b>${diemTxt(h.toan)}</b></div><div class="cell">Hoá<b>${diemTxt(h.hoa)}</b></div><div class="cell">Sinh<b>${diemTxt(h.sinh)}</b></div><div class="cell">Văn<b>${diemTxt(h.van)}</b></div><div class="cell tong">Tổng B<b>${diemTxt(h.b00)}</b></div></div>
       <div class="hint"><b>XH</b> chỉ hiện trên web — <b>tin nhắn + ảnh gửi PH không có XH</b>.</div>
       ${phoneHTML(em)}
       <div class="row2"><button class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>${SEND_MODE==="single"?"Copy "+LAN:"Copy đủ "+LANS.length+" Lần"}</button><button class="btn btn-soft" data-act="img"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>Tải ảnh${SEND_MODE==="single"?" "+LAN:""}</button><button class="btn btn-soft" data-act="view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Xem trước</button></div>`;
