@@ -104,6 +104,11 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
 #toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);background:#0F172A;color:#fff;padding:13px 20px;border-radius:14px;display:none;z-index:200;font-weight:600;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.35);max-width:92vw;text-align:center;opacity:0;transition:.25s}
 #toast.show{display:block;opacity:1;transform:translateX(-50%)}
 .footer{text-align:center;color:var(--mut);font-size:12.5px;margin-top:22px}
+.phone{display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:12.5px}
+.phone a{font-weight:800;color:var(--zalo);text-decoration:none}
+.phone .who{font-weight:700;color:var(--mut)}
+.pbtn{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;color:var(--txt);font-family:inherit;text-decoration:none}
+.pbtn:hover{border-color:var(--indigo)}
 @media(max-width:760px){.toolbar-grid{grid-template-columns:1fr}.stat-row{grid-template-columns:repeat(2,1fr)}.row2{flex-direction:column}.wrap{padding:0 12px 70px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 :focus-visible{outline:3px solid var(--ring);outline-offset:2px}
@@ -119,7 +124,7 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
       <button class="btn-ghost" id="themeBtn" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
     </div>
     <h1>Báo điểm <span class="gold">12A10</span> — 1 tin nhắn đủ 4 Lần</h1>
-    <p class="sub">Mỗi em 1 tin nhắn gồm <b>Lần 1 → Lần 4</b> (Toán / Hoá / Sinh / Văn + Tổng khối B). Không ghi thứ hạng, không nhận xét. Bấm copy là dán qua Zalo được ngay.</p>
+    <p class="sub">Mỗi em 1 tin nhắn gồm <b>Lần 1 → Lần 4</b>, mỗi Lần gói gọn <b>1 hàng</b> (Toán – Hoá – Sinh – Văn – Tổng B). Không ghi thứ hạng, không nhận xét. Bấm copy là dán qua Zalo được ngay.</p>
     <div class="stat-row">
       <div class="stat"><small>Sĩ số</small><b id="sSiso">33</b><span>lớp 12A10</span></div>
       <div class="stat"><small>TB khối B (Lần 4)</small><b id="sTBB">—</b><span>Toán + Hoá + Sinh</span></div>
@@ -147,12 +152,12 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
     </div>
     <div class="pills" id="lanRow" role="tablist" aria-label="Chọn Lần để xem thống kê"></div>
     <div class="mini-stats" id="stats"></div>
-    <div class="hint" style="margin-top:8px">Thẻ mỗi em hiện <b>bảng 4 Lần + biểu đồ cột Tổng B</b>. Nút copy luôn gửi <b>đủ 4 Lần</b>. Văn chỉ có Lần 1.</div>
+    <div class="hint" style="margin-top:8px">Thẻ mỗi em hiện <b>bảng 4 Lần + biểu đồ cột Tổng B</b>. Nút copy luôn gửi <b>đủ 4 Lần, mỗi Lần 1 hàng</b>. Văn chỉ có Lần 1. <span id="phoneNote"></span></div>
   </div>
 
   <div class="sec-head"><h2>Danh sách học sinh</h2><span class="count" id="dem">33 em</span></div>
   <div class="grid" id="grid"></div>
-  <div class="footer">Web tĩnh public qua GitHub Pages • Không lưu SĐT, không xếp hạng, không nhận xét • Nguồn: 2026-2027- 12A10 ĐK LẦN 4.xlsx • Cập nhật Lần 4 (21/09/2026)</div>
+  <div class="footer">Web tĩnh public qua GitHub Pages • Không xếp hạng, không nhận xét • SĐT chỉ hiện ở <b>bản local</b> (bản public ẩn để bảo mật) • Nguồn điểm: 2026-2027- 12A10 ĐK LẦN 4.xlsx • SĐT: Lý lịch trích ngang 12A10</div>
 </div>
 
 <div class="modal" id="modal" onclick="if(event.target===this)this.classList.remove('open')" role="dialog" aria-modal="true">
@@ -169,6 +174,7 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
 <div id="toast" role="status"></div>
 
 <script src="./data.js"></script>
+<script src="./danhba-private.js" onerror="void 0"></script>
 <script>
 let LAN="Lần 4", lastMsg="";
 const LANS=Object.keys(DATA);
@@ -185,17 +191,52 @@ function loadGVCN(){try{return localStorage.getItem("gvcn_12a10")||"";}catch(e){
 function saveTheme(t){try{localStorage.setItem("theme_12a10",t);}catch(e){}}
 function loadTheme(){try{return localStorage.getItem("theme_12a10")||"light";}catch(e){return "light";}}
 function makeFullMsg(sbd){
+  // Format NGANG: moi Lan 1 hang — gon, khong nhay dong tung mon
   const em=bySBD[sbd], gvcn=(document.getElementById("gvcn").value||"").trim(), L=[];
   L.push("Kính gửi phụ huynh em "+em.hoten+" (lớp 12A10),");
-  L.push("Kết quả kiểm tra định kì của em qua các lần như sau:");
+  L.push("Kết quả KTĐK của em:");
   LANS.forEach(lan=>{
-    const h=em.recs[lan]; L.push(""); L.push(lan.toUpperCase()+":");
-    if(!h||(h.toan==null&&h.hoa==null&&h.sinh==null&&h.van==null&&h.b00==null)){L.push("Chưa có điểm.");}
-    else{L.push("Toán: "+diemTxt(h.toan));L.push("Hoá: "+diemTxt(h.hoa));L.push("Sinh: "+diemTxt(h.sinh));L.push("Văn: "+diemTxt(h.van));L.push("Tổng điểm khối B (Toán + Hoá + Sinh): "+diemTxt(h.b00));}
+    const h=em.recs[lan];
+    if(!h||(h.toan==null&&h.hoa==null&&h.sinh==null&&h.van==null&&h.b00==null)){L.push("- "+lan+": chưa có điểm.");}
+    else{L.push("- "+lan+": Toán "+diemTxt(h.toan)+", Hoá "+diemTxt(h.hoa)+", Sinh "+diemTxt(h.sinh)+", Văn "+diemTxt(h.van)+" | Tổng B: "+diemTxt(h.b00));}
   });
-  L.push(""); L.push("Kính mong phụ huynh nhắc nhở, động viên em ôn tập.");
+  L.push("Kính mong phụ huynh nhắc nhở, động viên em ôn tập.");
   L.push(gvcn?("Trân trọng!\n"+gvcn):"Trân trọng!");
   return L.join("\n");
+}
+/* ----- SĐT PH (bao mat: chi hien khi co file local danhba-private.js) ----- */
+function normKey(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase().replace(/\s+/g," ").trim();}
+function getPhones(hoten){
+  const k=normKey(hoten);
+  let base={cha:"",me:""};
+  try{if(typeof PHONES!=="undefined"&&PHONES&&PHONES[k])base={cha:PHONES[k].cha||"",me:PHONES[k].me||""};}catch(e){}
+  try{
+    const ov=JSON.parse(localStorage.getItem("phones_ovr")||"{}");
+    if(ov[k]){if(ov[k].cha!==undefined)base.cha=ov[k].cha;if(ov[k].me!==undefined)base.me=ov[k].me;}
+  }catch(e){}
+  return base;
+}
+function hasPhoneFile(){try{return (typeof PHONES!=="undefined")&&PHONES&&Object.keys(PHONES).length>0;}catch(e){return false;}}
+function editPhones(hoten){
+  const cur=getPhones(hoten);
+  const cha=prompt("SĐT CHA của "+hoten+":",cur.cha||"");
+  if(cha===null)return;
+  const me=prompt("SĐT MẸ của "+hoten+":",cur.me||"");
+  if(me===null)return;
+  try{
+    const ov=JSON.parse(localStorage.getItem("phones_ovr")||"{}");
+    ov[normKey(hoten)]={cha:cha.trim(),me:me.trim()};
+    localStorage.setItem("phones_ovr",JSON.stringify(ov));
+  }catch(e){}
+  render();toast("Đã lưu SĐT (trên máy này) cho "+hoten+".");
+}
+function phoneHTML(em){
+  if(!hasPhoneFile()){
+    return `<div class="hint">SĐT ba/mẹ: <b>ẩn ở bản public</b> để bảo mật — mở bản local (file danhba-private.js) để hiện + bấm gọi/Zalo.</div>`;
+  }
+  const p=getPhones(em.hoten);
+  const btn=(label,num)=>num?`<a class="pbtn" href="tel:${num}">📞 ${label}: ${num}</a><a class="pbtn" href="https://zalo.me/${num}" target="_blank" rel="noopener">Zalo ${label}</a>`:`<span class="pbtn">— ${label}: chưa có</span>`;
+  return `<div class="phone"><span class="who">Ba/mẹ:</span>${btn("Ba",p.cha)}${btn("Mẹ",p.me)}<button class="pbtn" onclick="editPhones('${escapeHtml(em.hoten).replace(/'/g,"&#39;")}')">Sửa</button></div>`;
 }
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove("show"),2400);}
 async function copyText(t){try{await navigator.clipboard.writeText(t);return true;}catch(e){const ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");return true;}catch(_){return false;}finally{ta.remove();}}}
@@ -218,8 +259,9 @@ function render(){
   const l4=DATA["Lần 4"]||[];
   document.getElementById("sTBB").textContent=fnum(avg(l4.map(h=>h.b00)));
   document.getElementById("sMaxB").textContent=fnum(Math.max(...l4.map(h=>h.b00??-1).filter(v=>v>=0)));
-  const f=ALL_HS.filter(h=>!q||h.hoten.toLowerCase().includes(q)||h.sbd.includes(q));
+  const f=ALL_HS.filter(h=>{if(!q)return true;const p=getPhones(h.hoten);return h.hoten.toLowerCase().includes(q)||h.sbd.includes(q)||(p.cha&&p.cha.includes(q))||(p.me&&p.me.includes(q));});
   document.getElementById("dem").textContent=f.length+" / "+ALL_HS.length+" em • đủ "+LANS.length+" Lần/tin";
+  document.getElementById("phoneNote").textContent=hasPhoneFile()?"Đã nạp SĐT ba/mẹ (bản local).":"Bản public đang ẩn SĐT.";
   const g=document.getElementById("grid");g.innerHTML="";
   f.forEach(em=>{
     const bvals=LANS.map(l=>em.recs[l]?em.recs[l].b00:null);
@@ -233,6 +275,7 @@ function render(){
       <div class="spark" title="Tổng khối B qua các Lần">${bars}</div>
       <table class="mini"><tr><th>Lần</th><th>Toán</th><th>Hoá</th><th>Sinh</th><th>Tổng B</th></tr>${rows}</table>
       <div><span class="tag">Văn Lần 1: ${van1}</span></div>
+      ${phoneHTML(em)}
       <div class="row2"><button class="btn btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy đủ ${LANS.length} Lần</button><button class="btn btn-soft"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Xem trước</button></div>`;
     const [b1,b2]=d.querySelectorAll("button");
     b1.onclick=async()=>{const m=makeFullMsg(em.sbd);const ok=await copyText(m);toast(ok?`Đã copy đủ ${LANS.length} Lần của ${em.hoten} — dán qua Zalo!`:"Không copy tự động, bấm Xem trước để copy tay.");};
@@ -246,9 +289,10 @@ function escapeHtml(s){return String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","
 async function copyModal(){const ok=await copyText(lastMsg);toast(ok?"Đã copy! Dán qua Zalo cho PH.":"Copy tay giúp thầy nhé.");}
 async function copyAll(){
   const list=DATA[LAN]||[];
-  const lines=list.map(h=>[h.sbd,h.hoten,diemTxt(h.toan),diemTxt(h.hoa),diemTxt(h.sinh),diemTxt(h.van),diemTxt(h.b00)].join("\t"));
-  const t=[`SBD\tHọ tên\tToán\tHoá\tSinh\tVăn\tTổng B (${LAN})`,...lines].join("\n");
-  const ok=await copyText(t);toast(ok?`Đã copy bảng ${LAN} (${list.length} em)!`:"Không copy được.");
+  const hp=hasPhoneFile();
+  const lines=list.map(h=>{const p=hp?getPhones(h.hoten):{cha:"",me:""};return [h.sbd,h.hoten,diemTxt(h.toan),diemTxt(h.hoa),diemTxt(h.sinh),diemTxt(h.van),diemTxt(h.b00),p.cha||"",p.me||""].join("\t");});
+  const t=[`SBD\tHọ tên\tToán\tHoá\tSinh\tVăn\tTổng B (${LAN})\tĐT Ba\tĐT Mẹ`,...lines].join("\n");
+  const ok=await copyText(t);toast(ok?`Đã copy bảng ${LAN} (${list.length} em${hp?", kèm SĐT":""})!`:"Không copy được.");
 }
 document.getElementById("themeBtn").onclick=()=>{const h=document.documentElement;const n=h.getAttribute("data-theme")==="light"?"dark":"light";h.setAttribute("data-theme",n);saveTheme(n);};
 document.documentElement.setAttribute("data-theme",loadTheme());
