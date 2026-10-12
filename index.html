@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Báo điểm 12A10 — THPT Chi Lăng</title>
-<meta name="description" content="Tra điểm KTĐK Lần 1-4 lớp 12A10, copy 1 tin nhắn đủ 4 Lần gửi phụ huynh (không xếp hạng, không nhận xét).">
+<meta name="description" content="Tra điểm KTĐK Lần 1-6 lớp 12A10, copy 1 tin nhắn đủ 6 Lần gửi phụ huynh (không xếp hạng, không nhận xét).">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -129,16 +129,16 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
     <div class="nav">
       <div class="brand"><div class="logo">CL</div><div><b>THPT Chi Lăng • 12A10</b><small>Báo điểm KTĐK • Gửi phụ huynh qua Zalo</small></div></div>
       <div class="nav-sp"></div>
-      <span class="chip" id="chipLan">Lần 1 → Lần 4 • 33 em</span>
+      <span class="chip" id="chipLan">Lần 1 → Lần 6 • 33 em</span>
       <button class="btn-ghost" id="themeBtn" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
     </div>
-    <h1>Báo điểm <span class="gold">12A10</span> — 1 tin nhắn đủ 4 Lần</h1>
-    <p class="sub">Mỗi em 1 tin nhắn gồm <b>Lần 1 → Lần 4</b>, mỗi Lần gói gọn <b>1 hàng</b> (Toán – Hoá – Sinh – Văn – Tổng B). <b>Web hiện xếp hạng</b> để thầy theo dõi, nhưng <b>tin nhắn + ảnh gửi PH không có xếp hạng</b>. Bấm copy / tải ảnh là gửi Zalo được ngay.</p>
+    <h1>Báo điểm <span class="gold">12A10</span> — 1 tin nhắn đủ 6 Lần</h1>
+    <p class="sub">Mỗi em 1 tin nhắn gồm <b>Lần 1 → Lần 6</b>, mỗi Lần gói gọn <b>1 hàng</b> (Toán – Hoá – Sinh – Văn – Tổng B). <b>Web hiện xếp hạng</b> để thầy theo dõi, nhưng <b>tin nhắn + ảnh gửi PH không có xếp hạng</b>. Bấm copy / tải ảnh là gửi Zalo được ngay.</p>
     <div class="stat-row">
       <div class="stat"><small>Sĩ số</small><b id="sSiso">33</b><span>lớp 12A10</span></div>
-      <div class="stat"><small>TB khối B (Lần 4)</small><b id="sTBB">—</b><span>Toán + Hoá + Sinh</span></div>
-      <div class="stat"><small>Cao nhất khối B (Lần 4)</small><b id="sMaxB">—</b><span>không công bố tên</span></div>
-      <div class="stat"><small>Môn Văn</small><b>Lần 1</b><span>duy nhất có điểm Văn</span></div>
+      <div class="stat"><small>TB khối B (Lần 6)</small><b id="sTBB">—</b><span>Toán + Hoá + Sinh</span></div>
+      <div class="stat"><small>Cao nhất khối B (Lần 6)</small><b id="sMaxB">—</b><span>không công bố tên</span></div>
+      <div class="stat"><small>Môn Văn</small><b>Lần 1 + 3</b><span>Văn chỉ thi Lần 1 và 3</span></div>
     </div>
   </div>
 </header>
@@ -161,16 +161,16 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
     </div>
     <div class="pills" id="lanRow" role="tablist" aria-label="Chọn Lần để xem thống kê"></div>
     <div class="pills" id="modeRow" aria-label="Chế độ gửi">
-      <button class="pill sel" id="modeFull" onclick="setMode('full')">Gửi: đủ 4 Lần/tin</button>
+      <button class="pill sel" id="modeFull" onclick="setMode('full')">Gửi: đủ 6 Lần/tin</button>
       <button class="pill" id="modeSingle" onclick="setMode('single')">Gửi: từng Lần riêng</button>
     </div>
     <div class="mini-stats" id="stats"></div>
-    <div class="hint" style="margin-top:8px">Thẻ mỗi em hiện <b>bảng 4 Lần + biểu đồ cột Tổng B</b>. Chế độ <b>đủ 4 Lần</b>: 1 tin gồm cả 4 Lần. Chế độ <b>từng Lần riêng</b>: chỉ gửi Lần đang chọn ở trên (mỗi Lần 1 hàng). Văn chỉ có Lần 1. <span id="phoneNote"></span></div>
+    <div class="hint" style="margin-top:8px">Thẻ mỗi em hiện <b>bảng 6 Lần + biểu đồ cột Tổng B</b>. Chế độ <b>đủ 6 Lần</b>: 1 tin gồm cả 6 Lần. Chế độ <b>từng Lần riêng</b>: chỉ gửi Lần đang chọn ở trên (mỗi Lần 1 hàng). Văn chỉ có Lần 1 và 3. <span id="phoneNote"></span></div>
   </div>
 
   <div class="sec-head"><h2>Danh sách học sinh</h2><span class="count" id="dem">33 em</span></div>
   <div class="grid" id="grid"></div>
-  <div class="footer">Web tĩnh public qua GitHub Pages • Không xếp hạng, không nhận xét • SĐT chỉ hiện ở <b>bản local</b> (bản public ẩn để bảo mật) • Nguồn điểm: 2026-2027- 12A10 ĐK LẦN 4.xlsx • SĐT: Lý lịch trích ngang 12A10</div>
+  <div class="footer">Web tĩnh public qua GitHub Pages • Không xếp hạng, không nhận xét • SĐT chỉ hiện ở <b>bản local</b> (bản public ẩn để bảo mật) • Nguồn điểm: file KTĐK hằng tuần Lần 1–6 + file thống kê • SĐT: Lý lịch trích ngang 12A10</div>
 </div>
 
 <div class="modal" id="modal" onclick="if(event.target===this)this.classList.remove('open')" role="dialog" aria-modal="true">
@@ -189,7 +189,7 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
 <script src="./data.js"></script>
 <script src="./danhba-private.js" onerror="void 0"></script>
 <script>
-let LAN="Lần 4", lastMsg="", SEND_MODE="full";
+let LAN="Lần 6", lastMsg="", SEND_MODE="full";
 const LANS=Object.keys(DATA);
 const bySBD={};
 LANS.forEach(lan=>{(DATA[lan]||[]).forEach(h=>{if(!bySBD[h.sbd])bySBD[h.sbd]={sbd:h.sbd,hoten:h.hoten,recs:{}};bySBD[h.sbd].hoten=h.hoten;bySBD[h.sbd].recs[lan]=h;});});
@@ -284,7 +284,7 @@ function render(){
     `<span class="mstat">TB Hoá <b>${fnum(avg(list.map(h=>h.hoa)))}</b></span>`+
     `<span class="mstat">TB Sinh <b>${fnum(avg(list.map(h=>h.sinh)))}</b></span>`+
     `<span class="mstat">TB khối B <b>${fnum(avg(list.map(h=>h.b00)))}</b></span>`;
-  const l4=DATA["Lần 4"]||[];
+  const l4=DATA["Lần 6"]||[];
   document.getElementById("sTBB").textContent=fnum(avg(l4.map(h=>h.b00)));
   document.getElementById("sMaxB").textContent=fnum(Math.max(...l4.map(h=>h.b00??-1).filter(v=>v>=0)));
   const f=ALL_HS.filter(h=>{if(!q)return true;const p=getPhones(h.hoten);return h.hoten.toLowerCase().includes(q)||h.sbd.includes(q)||(p.cha&&p.cha.includes(q))||(p.me&&p.me.includes(q));});
@@ -296,7 +296,7 @@ function render(){
     const mx=Math.max(...bvals.filter(v=>v!=null),1);
     const bars=LANS.map((l,i)=>{const v=bvals[i];const h=v==null?6:Math.max(10,Math.round(v/mx*44));return `<div class="bar${v==null?" dim":""}" style="height:${h}px"><i>${v==null?"—":fnum(v)}</i></div>`;}).join("");
     const rows=LANS.map(lan=>{const h=em.recs[lan];if(!h)return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td colspan="6">—</td></tr>`;const xh=h.xh!=null?h.xh+"/"+"33":"—";return `<tr><td><b>${lan.replace("Lần ","L")}</b></td><td>${diemTxt(h.toan)}</td><td>${diemTxt(h.hoa)}</td><td>${diemTxt(h.sinh)}</td><td>${diemTxt(h.van)}</td><td><b>${diemTxt(h.b00)}</b></td><td style="color:#6D28D9;font-weight:800">${xh}</td></tr>`;}).join("");
-    const newest=em.recs["Lần 4"]||em.recs["Lần 3"]||{};
+    const newest=em.recs["Lần 6"]||em.recs["Lần 5"]||{};
     const xhRow=LANS.map(lan=>{const h=em.recs[lan];const t=h&&h.xh!=null?h.xh+"/33":"—";return `<span class="xh-chip">${lan.replace("Lần ","Hạng L")}: ${t}</span>`;}).join("");
     const d=document.createElement("div");d.className="hs";
     if(SEND_MODE==="single"){
