@@ -9,7 +9,7 @@ Tra điểm KTĐK **Lần 1 → Lần 7** lớp 12A10 (THPT Chi Lăng), bấm **
 ```
 Kính gửi phụ huynh em [Họ tên] (lớp 12A10),
 Kết quả KTĐK LẦN 7 của em:
-Toán 6, Hoá 7.6, Sinh 8.25, Văn — | Tổng B: 21.85
+Toán 5.5, Hoá 7.6, Sinh 8.25, Văn — | Tổng B: 21.35
 Kính mong phụ huynh nhắc nhở, động viên em ôn tập.
 Trân trọng!
 [GVCN]
@@ -17,7 +17,7 @@ Trân trọng!
 
 - Văn chỉ thi Lần 1 và 3 → các Lần 2/4/5/6/7 hiện `—`.
 - Tổng khối B = Toán + Hoá + Sinh (tự tính trong Excel, web giữ nguyên).
-- Nguồn: file KTĐK hằng tuần (`...Bảng điểm định kì hằng tuần (7).xlsx`, sheet Lần 1–7) + file thống kê (`...THỐNG KÊ ĐIỂM...xlsx`).
+- Nguồn: file KTĐK hằng tuần (`...Bảng điểm định kì hằng tuần (8).xlsx`, sheet Lần 1–7) + file thống kê (`...THỐNG KÊ ĐIỂM...xlsx`).
 - Sĩ số 33: đã **xoá em Phạm Hữu Nam Huy** (nghỉ học) khỏi cả 7 Lần, SBD chuẩn theo Lần 7; **thêm em Nguyễn Trịnh Bảo Ngọc** (mới, có điểm từ Lần 5; Lần 1–4 hiện "chưa có điểm").
 
 ## Cách dùng hằng tuần / hằng tháng
