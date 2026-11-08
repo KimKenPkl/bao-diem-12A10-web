@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Điểm giữa kì 1 — 12A10</title>
+<meta name="description" content="Điểm kiểm tra giữa kì 1 lớp 12A10 — đủ 11 môn, tổng khối B00 và tổng 11 môn. Copy tin nhắn gửi phụ huynh qua Zalo (không xếp hạng).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4FA; --card:#FFFFFF; --card2:#F7F9FF; --txt:#16213A; --mut:#5B6B8C;
+  --line:#E3E9F5; --navy:#1B2A4A; --indigo:#4F46E5; --violet:#7C3AED;
+  --gold:#C9A227; --green:#16A34A; --red:#DC2626; --zalo:#0068FF;
+  --shadow:0 10px 30px rgba(27,42,74,.10); --shadow-sm:0 2px 10px rgba(27,42,74,.08);
+  --r:20px;
+}
+[data-theme="dark"]{
+  --bg:#0A1020; --card:#101A30; --card2:#0D1528; --txt:#E8EDF7; --mut:#93A1C0;
+  --line:#1E2A45; --navy:#E8EDF7; --shadow:0 10px 30px rgba(0,0,0,.45); --shadow-sm:0 2px 10px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;margin:0;background:var(--bg);color:var(--txt);line-height:1.55;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(79,70,229,.25)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#131E3A 0%,#2B2A7A 45%,#6D28D9 100%);color:#fff}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none}
+.hero::before{width:460px;height:460px;left:-140px;top:-160px;background:radial-gradient(circle,#6366F1,transparent 65%)}
+.hero::after{width:500px;height:500px;right:-160px;bottom:-220px;background:radial-gradient(circle,#EC4899,transparent 65%)}
+.hero-inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:24px 18px 78px}
+.nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-weight:800;font-size:18px;color:#1B2A4A;background:linear-gradient(135deg,#FDE68A,#C9A227);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.brand b{font-size:15px;letter-spacing:.2px}.brand small{display:block;font-weight:500;opacity:.8;font-size:12px}
+.nav-sp{flex:1}
+.chip{font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);backdrop-filter:blur(10px)}
+.btn-ghost{cursor:pointer;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:9px 13px;font-weight:700;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.btn-ghost:hover{background:rgba(255,255,255,.22)}
+h1{font-size:clamp(24px,4vw,40px);line-height:1.15;margin:26px 0 10px;font-weight:800;letter-spacing:-.5px}
+.gold{background:linear-gradient(135deg,#FDE68A,#C9A227);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{max-width:900px;opacity:.88;font-size:14px;margin:0}
+.sub b{color:#FDE68A}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:22px}
+.stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:12px 14px;backdrop-filter:blur(8px)}
+.stat small{display:block;font-size:11.5px;opacity:.8;font-weight:600}
+.stat b{font-size:22px;font-weight:800;display:block;margin-top:2px}
+.stat span{font-size:11px;opacity:.7}
+.wrap{max-width:1100px;margin:-46px auto 0;padding:0 18px 70px;position:relative;z-index:2}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px}
+.toolbar{position:sticky;top:10px;z-index:30;margin-bottom:18px}
+.toolbar-grid{display:grid;grid-template-columns:1.4fr 1fr auto;gap:10px}
+@media(max-width:760px){.toolbar-grid{grid-template-columns:1fr}}
+.field{display:flex;align-items:center;gap:9px;background:var(--card2);border:1.5px solid var(--line);border-radius:14px;padding:9px 12px}
+.field svg{width:18px;height:18px;color:var(--mut);flex:none}
+.field input{flex:1;border:0;background:transparent;color:var(--txt);font:inherit;font-size:14px;outline:none;min-width:0}
+.field input::placeholder{color:var(--mut)}
+select{background:var(--card2);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font:inherit;font-size:14px;color:var(--txt);cursor:pointer}
+.hint{color:var(--mut);font-size:12.5px;margin-top:10px}
+.hint b{color:var(--txt)}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin:6px 2px 12px}
+.sec-head h2{font-size:17px;margin:0}
+.count{font-size:12px;font-weight:700;color:var(--mut);background:var(--card);border:1px solid var(--line);padding:3px 10px;border-radius:999px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+@media(max-width:420px){.grid{grid-template-columns:1fr}}
+.hs{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:var(--shadow-sm);cursor:pointer;transition:.18s;outline:none}
+.hs:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:#C7D0E8}
+.hs:focus-visible{box-shadow:0 0 0 3px rgba(79,70,229,.35)}
+.hs-top{display:flex;align-items:center;gap:10px}
+.ava{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:13px;flex:none}
+.hs-name{flex:1;min-width:0}
+.hs-name b{display:block;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hs-name small{color:var(--mut);font-size:11.5px;font-weight:600}
+.hs-score{text-align:right;flex:none}
+.hs-score b{display:block;font-size:20px;font-weight:800;color:var(--indigo);line-height:1.1}
+.hs-score small{color:var(--mut);font-size:10.5px;font-weight:600}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 8px}
+.badge{font-size:11.5px;font-weight:700;color:var(--mut);background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+.badge b{color:var(--txt)}
+.badge.b{border-color:#C7D2FE;background:#EEF2FF;color:#3730A3}
+[data-theme="dark"] .badge.b{background:#1E1B4B;border-color:#3730A3;color:#C7D2FE}
+.badge.b b{color:inherit}
+.subj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.sj{display:flex;justify-content:space-between;align-items:center;gap:6px;background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:4px 8px;font-size:12px}
+.sj span{color:var(--mut);font-weight:600}
+.sj b{font-weight:800}
+.sj.low b{color:var(--red)}
+.sj.na b{color:var(--mut)}
+.hs-actions{display:flex;gap:8px;margin-top:11px}
+.btn{border:0;border-radius:11px;padding:9px 12px;font:inherit;font-weight:700;font-size:12.5px;cursor:pointer;transition:.15s}
+.btn-zalo{background:var(--zalo);color:#fff;flex:1}
+.btn-zalo:hover{filter:brightness(1.08)}
+.btn-line{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.btn-line:hover{border-color:#C7D0E8}
+.empty{text-align:center;padding:52px 20px}
+.empty .big{font-size:44px;line-height:1;margin-bottom:10px}
+.empty h2{margin:0 0 6px;font-size:19px}
+.empty p{color:var(--mut);font-size:14px;margin:0}
+.footer{text-align:center;color:var(--mut);font-size:11.5px;margin-top:26px;line-height:1.7}
+.modal{position:fixed;inset:0;background:rgba(10,16,32,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:16px;z-index:60}
+.modal.open{display:flex}
+.modal .box{background:var(--card);border-radius:20px;max-width:640px;width:100%;max-height:88vh;overflow:auto;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.modal h3{margin:0;font-size:16px}
+pre.msg{white-space:pre-wrap;word-break:break-word;background:var(--card2);border:1.5px dashed var(--line);border-radius:14px;padding:14px;font-family:inherit;font-size:13.5px;line-height:1.65;margin:12px 0}
+.modal-actions{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);background:#111827;color:#fff;padding:10px 16px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:.22s;z-index:80}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="nav">
+      <div class="brand"><div class="logo">CL</div><div><b>THPT Chi Lăng • 12A10</b><small>Điểm giữa kì 1 • Gửi phụ huynh qua Zalo</small></div></div>
+      <div class="nav-sp"></div>
+      <a class="btn-ghost" href="./index.html">← Bảng điểm tuần</a>
+      <button class="btn-ghost" id="themeBtn" type="button" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
+    </div>
+    <h1>Điểm <span class="gold">giữa kì 1</span> — 12A10</h1>
+    <p class="sub">Đủ <b>11 môn</b> + <b>tổng khối B00</b> (Toán + Hoá + Sinh) + <b>tổng 11 môn</b>. Web hiện xếp hạng để thầy theo dõi, nhưng <b>tin nhắn gửi phụ huynh không có xếp hạng</b>. Bấm vào thẻ để xem và copy tin nhắn.</p>
+    <div class="stat-row">
+      <div class="stat"><small>Sĩ số</small><b id="sSiso">—</b><span>lớp 12A10</span></div>
+      <div class="stat"><small>TB tổng 11 môn</small><b id="sTBTong">—</b><span>thang điểm 110</span></div>
+      <div class="stat"><small>TB khối B00</small><b id="sTBB">—</b><span>Toán + Hoá + Sinh</span></div>
+      <div class="stat"><small>Cao nhất khối B00</small><b id="sMaxB">—</b><span>không công bố tên</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="panel toolbar" id="toolbar">
+    <div class="toolbar-grid">
+      <div class="field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="q" placeholder="Tìm tên / SBD… (vd: Minh, 1017)" aria-label="Tìm học sinh">
+      </div>
+      <div class="field">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <input id="gvcn" placeholder="Tên GVCN ký cuối tin nhắn" aria-label="Tên GVCN">
+      </div>
+      <select id="sortBy" aria-label="Sắp xếp danh sách">
+        <option value="sbd">Xếp theo SBD</option>
+        <option value="tong">Xếp theo tổng 11 môn</option>
+        <option value="b00">Xếp theo khối B00</option>
+      </select>
+    </div>
+    <div class="hint">Mẹo: gõ <b>vài chữ cuối của tên</b> hoặc <b>SBD</b> để tìm nhanh. Điểm dưới 5 được tô đỏ. Bấm thẻ học sinh → hiện tin nhắn đủ 11 môn để copy gửi Zalo.</div>
+  </div>
+
+  <div class="panel empty" id="emptyState" hidden>
+    <div class="big">📘</div>
+    <h2>Chưa có điểm giữa kì 1</h2>
+    <p>Dữ liệu điểm giữa kì 1 chưa được cập nhật. Vui lòng quay lại sau.</p>
+  </div>
+
+  <div id="listWrap">
+    <div class="sec-head"><h2>Danh sách học sinh</h2><span class="count" id="dem">—</span></div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="footer">
+    Web tĩnh public qua GitHub Pages • Không xếp hạng trong tin nhắn, không nhận xét • Nguồn điểm: bài kiểm tra giữa kì 1 — năm học 2026–2027
+  </div>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="box">
+    <h3 id="mTitle"></h3>
+    <div class="hint">Bấm <b>Sao chép</b> rồi dán qua Zalo cho phụ huynh (không có xếp hạng).</div>
+    <pre class="msg" id="mBody"></pre>
+    <div class="modal-actions">
+      <button class="btn btn-line" id="mClose" type="button">Đóng</button>
+      <button class="btn btn-zalo" id="mCopy" type="button">Sao chép tin nhắn</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="./data.js?v=20261108_1"></script>
+<script>
+(function(){
+  "use strict";
+  var KEY = "Giữa kì 1";
+  var SUBJ = [
+    ["toan","Toán"],["ly","Lý"],["anh","Anh"],["van","Văn"],["su","Sử"],["dia","Địa"],
+    ["hoa","Hoá"],["sinh","Sinh"],["tin","Tin"],["ktpl","KTPL"],["gdqp","GDQP"]
+  ];
+  var GRADS = [["#6366F1","#8B5CF6"],["#0EA5E9","#6366F1"],["#F59E0B","#EF4444"],["#10B981","#0EA5E9"],["#EC4899","#8B5CF6"],["#F97316","#EAB308"]];
+  var ROWS = (typeof DATA !== "undefined" && DATA && Array.isArray(DATA[KEY])) ? DATA[KEY].filter(function(h){return h && h.sbd;}) : [];
+  var HAS = ROWS.some(function(h){return SUBJ.some(function(s){return h[s[0]] != null;});});
+  var bySBD = {};
+  ROWS.forEach(function(h){ bySBD[h.sbd] = h; });
+  var SORT = "sbd";
+
+  function grad(sbd){ var s=0; String(sbd).split("").forEach(function(c){s+=c.charCodeAt(0);}); var g=GRADS[s%GRADS.length]; return "linear-gradient(135deg,"+g[0]+","+g[1]+")"; }
+  function initials(name){ var p=String(name||"").trim().split(/\s+/); return p.slice(-2).map(function(w){return w[0]||"";}).join("").toUpperCase(); }
+  function fnum(v){ if(v==null||v===""||isNaN(v))return "—"; var n=Number(v); if(Math.abs(n-Math.round(n))<1e-9)return String(Math.round(n)); return String(Math.round(n*100)/100); }
+  function diemTxt(v){ return v==null ? "—" : fnum(v); }
+  function avg(arr){ var v=arr.filter(function(x){return x!=null && !isNaN(x);}); if(!v.length)return null; return v.reduce(function(a,b){return a+b;},0)/v.length; }
+  function normKey(s){ return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase().replace(/\s+/g," ").trim(); }
+  function loadGVCN(){ try{return localStorage.getItem("gvcn_12a10")||"";}catch(e){return "";} }
+  function saveGVCN(){ try{localStorage.setItem("gvcn_12a10", document.getElementById("gvcn").value);}catch(e){} }
+  function loadTheme(){ try{return localStorage.getItem("theme_12a10")||"light";}catch(e){return "light";} }
+  function saveTheme(t){ try{localStorage.setItem("theme_12a10", t);}catch(e){} }
+  function toast(msg){ var t=document.getElementById("toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._tm); t._tm=setTimeout(function(){t.classList.remove("on");},2200); }
+
+  function msgFor(h){
+    var gvcn = (document.getElementById("gvcn").value||"").trim();
+    var L = [];
+    L.push("Kính gửi phụ huynh em " + h.hoten + " (lớp 12A10),");
+    L.push("Kết quả kiểm tra giữa kì 1 của em:");
+    L.push("- " + SUBJ.slice(0,6).map(function(s){return s[1]+" "+diemTxt(h[s[0]]);}).join(", "));
+    L.push("- " + SUBJ.slice(6).map(function(s){return s[1]+" "+diemTxt(h[s[0]]);}).join(", "));
+    L.push("- Tổng khối B00 (Toán + Hoá + Sinh): " + diemTxt(h.b00));
+    L.push("- Tổng điểm 11 môn: " + diemTxt(h.tong));
+    L.push("Kính mong phụ huynh nhắc nhở, động viên em ôn tập.");
+    L.push(gvcn ? ("Trân trọng!\n" + gvcn) : "Trân trọng!");
+    return L.join("\n");
+  }
+
+  function cardHTML(h){
+    var chips = SUBJ.map(function(s){
+      var v = h[s[0]];
+      var cls = "sj" + (v==null ? " na" : (v<5 ? " low" : ""));
+      return '<div class="'+cls+'"><span>'+s[1]+'</span><b>'+diemTxt(v)+'</b></div>';
+    }).join("");
+    var miss = (h.so_mon != null && h.so_mon < SUBJ.length) ? " • "+h.so_mon+"/11 môn" : "";
+    return '<article class="hs" data-sbd="'+h.sbd+'" tabindex="0" role="button" aria-label="Xem tin nhắn '+h.hoten+'">'
+      + '<div class="hs-top">'
+      +   '<div class="ava" style="background:'+grad(h.sbd)+'">'+initials(h.hoten)+'</div>'
+      +   '<div class="hs-name"><b>'+h.hoten+'</b><small>SBD '+h.sbd+miss+'</small></div>'
+      +   '<div class="hs-score"><b>'+diemTxt(h.tong)+'</b><small>Tổng 11 môn</small></div>'
+      + '</div>'
+      + '<div class="badges">'
+      +   '<span class="badge b">B00 <b>'+diemTxt(h.b00)+'</b></span>'
+      +   '<span class="badge">Hạng B00 <b>'+(h.xhb != null ? h.xhb : "—")+'</b></span>'
+      +   '<span class="badge">Hạng tổng <b>'+(h.xh != null ? h.xh : "—")+'</b></span>'
+      + '</div>'
+      + '<div class="subj-grid">'+chips+'</div>'
+      + '<div class="hs-actions"><button class="btn btn-zalo" type="button" data-copy="'+h.sbd+'">Copy tin nhắn</button></div>'
+      + '</article>';
+  }
+
+  function render(){
+    var q = normKey(document.getElementById("q").value);
+    var list = ROWS.filter(function(h){
+      if(!q) return true;
+      return normKey(h.hoten).indexOf(q) >= 0 || String(h.sbd).indexOf(q) >= 0;
+    });
+    list = list.slice().sort(function(a,b){
+      if(SORT === "tong") return (b.tong==null?-1:b.tong) - (a.tong==null?-1:a.tong);
+      if(SORT === "b00") return (b.b00==null?-1:b.b00) - (a.b00==null?-1:a.b00);
+      return String(a.sbd).localeCompare(String(b.sbd), "vi");
+    });
+    document.getElementById("dem").textContent = list.length + " em";
+    document.getElementById("grid").innerHTML = list.map(cardHTML).join("");
+  }
+
+  function openMsg(sbd){
+    var h = bySBD[sbd];
+    if(!h) return;
+    document.getElementById("mTitle").textContent = h.hoten + " — Giữa kì 1";
+    document.getElementById("mBody").textContent = msgFor(h);
+    document.getElementById("modal").classList.add("open");
+    document.getElementById("mCopy").focus();
+  }
+  function closeMsg(){ document.getElementById("modal").classList.remove("open"); }
+
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(text).then(function(){return true;}).catch(function(){return fallbackCopy(text);});
+    }
+    return Promise.resolve(fallbackCopy(text));
+  }
+  function fallbackCopy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = document.execCommand("copy");
+      ta.remove();
+      return ok;
+    }catch(e){ return false; }
+  }
+
+  function initStats(){
+    document.getElementById("sSiso").textContent = ROWS.length || "—";
+    var tongs = ROWS.map(function(h){return h.tong;});
+    var b00s = ROWS.map(function(h){return h.b00;});
+    document.getElementById("sTBTong").textContent = fnum(avg(tongs));
+    document.getElementById("sTBB").textContent = fnum(avg(b00s));
+    var valid = b00s.filter(function(v){return v!=null;});
+    document.getElementById("sMaxB").textContent = valid.length ? fnum(Math.max.apply(null, valid)) : "—";
+  }
+
+  // theme
+  var theme = loadTheme();
+  document.documentElement.setAttribute("data-theme", theme);
+  document.getElementById("themeBtn").addEventListener("click", function(){
+    theme = (theme === "dark") ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", theme);
+    saveTheme(theme);
+  });
+
+  // GVCN
+  var gv = document.getElementById("gvcn");
+  gv.value = loadGVCN();
+  gv.addEventListener("input", saveGVCN);
+
+  if(!HAS){
+    document.getElementById("toolbar").hidden = true;
+    document.getElementById("listWrap").hidden = true;
+    document.getElementById("emptyState").hidden = false;
+    return;
+  }
+
+  initStats();
+  render();
+
+  document.getElementById("q").addEventListener("input", render);
+  document.getElementById("sortBy").addEventListener("change", function(){ SORT = this.value; render(); });
+
+  document.getElementById("grid").addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-copy]");
+    if(btn){
+      e.stopPropagation();
+      openMsg(btn.getAttribute("data-copy"));
+      return;
+    }
+    var card = e.target.closest(".hs");
+    if(card) openMsg(card.getAttribute("data-sbd"));
+  });
+  document.getElementById("grid").addEventListener("keydown", function(e){
+    if(e.key !== "Enter" && e.key !== " ") return;
+    var card = e.target.closest(".hs");
+    if(card){ e.preventDefault(); openMsg(card.getAttribute("data-sbd")); }
+  });
+
+  document.getElementById("mClose").addEventListener("click", closeMsg);
+  document.getElementById("modal").addEventListener("click", function(e){ if(e.target === this) closeMsg(); });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMsg(); });
+
+  document.getElementById("mCopy").addEventListener("click", function(){
+    copyText(document.getElementById("mBody").textContent).then(function(ok){
+      toast(ok ? "Đã copy tin nhắn — dán qua Zalo cho PH" : "Không copy được, thầy copy thủ công giúp em");
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -46,8 +46,55 @@ Trân trọng!
 2. Chạy script build `data.js` từ Excel (hoặc nhắn tôi làm).
 3. `git add data.js && git commit -m "cap nhat Lan 8" && git push` — web tự cập nhật sau ~1 phút (GitHub Pages).
 
+## Điểm giữa kì 1 (11 môn) — trang riêng
+
+Trang **`gk1.html`**: https://kimkenpkl.github.io/bao-diem-12A10-web/gk1.html
+
+- Đủ **11 môn**: Toán, Lý, Anh, Văn, Sử, Địa, Hoá, Sinh, Tin, KTPL, GDQP.
+- **B00 = Toán + Hoá + Sinh** và **Tổng = tổng 11 môn** (web tự tính lại bằng Python, không tin công thức Excel).
+- Web có hiện **hạng B00 / hạng tổng** để thầy theo dõi; **tin nhắn gửi PH không có xếp hạng**.
+- Link "📘 Giữa kì 1" ở trang chủ **chỉ hiện khi `data.js` đã có điểm GK1 thật** (tránh đưa trang rỗng lên mạng).
+- Khi chưa có điểm, `gk1.html` hiện thông báo "Chưa có điểm giữa kì 1".
+
+### Quy trình cập nhật GK1 (3 bước)
+
+1. **Nhập điểm** vào file mẫu `12A10-GK1-MAU.xlsx` (33 HS, cột D–N là 11 môn; O/P/Q/R tự tính B00, Tổng, hạng).
+   - Hoặc dùng trang nhập nhanh local `nhap-diem.html` (mở bằng trình duyệt, gõ điểm, Enter xuống dòng cùng môn, Tab sang môn; dữ liệu tự lưu trong máy) rồi copy TSV dán vào ô D4 của Excel.
+2. **Sinh `data.js`**:
+   ```powershell
+   $env:PYTHONIOENCODING='utf-8'
+   python build_data.py --gk1 "12A10-GK1-MAU.xlsx"
+   ```
+   - File GK1 rỗng → script **không** thêm key `"Giữa kì 1"` (an toàn).
+   - Có thể xem trước bằng `--out data_test.js`.
+3. **Push**:
+   ```powershell
+   git add data.js && git commit -m "cap nhat diem giua ki 1" && git push
+   ```
+
+### Công cụ build
+
+`build_data.py` đọc Excel → tính lại B00/Tổng/hạng → ghi `data.js`.
+
+```powershell
+# cập nhật điểm tuần (sheet Lần N)
+python build_data.py --weekly "Bang diem tuan.xlsx"
+
+# cập nhật GK1, giữ nguyên các Lần đang có
+python build_data.py --gk1 "GK1.xlsx"
+
+# chỉ ghi đè khi tên học sinh lệch so với data.js (mặc định: bỏ qua sheet lệch)
+python build_data.py --weekly "..." --force
+```
+
+Chốt an toàn: sheet có tên học sinh **lệch** so với `data.js` hiện có sẽ **bị bỏ qua** (trừ khi `--force`) — tránh ghi đè nhầm khi file Excel đổi danh sách.
+
 ## File trong repo
 
-- `index.html` — web tĩnh (không backend, mở offline vẫn chạy).
-- `data.js` — điểm 8 lần (33 HS × Toán/Hoá/Sinh/Văn/B00/XH).
+- `index.html` — web tĩnh điểm tuần (không backend, mở offline vẫn chạy).
+- `gk1.html` — trang điểm giữa kì 1 (11 môn + B00 + Tổng).
+- `data.js` — điểm Lần 1–8 (33 HS × Toán/Hoá/Sinh/Văn/B00/XH) + `"Giữa kì 1"` khi có điểm.
+- `build_data.py` — script sinh `data.js` từ Excel.
 - `.nojekyll` — cấu hình GitHub Pages.
+
+> `nhap-diem.html` (trang nhập điểm local) và `danhba-private.js` (SĐT phụ huynh) nằm trong `.gitignore` — **không** đưa lên mạng.

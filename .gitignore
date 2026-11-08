@@ -1,2 +1,9 @@
 # LOCAL ONLY - khong public SDT phu huynh
 danhba-private.js
+
+# Cong cu nhap diem local (khong dua len GitHub Pages)
+nhap-diem.html
+
+# File tam khi build
+data_test.js
+*.xlsx

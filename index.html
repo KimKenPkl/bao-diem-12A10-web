@@ -134,6 +134,7 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
       <div class="brand"><div class="logo">CL</div><div><b>THPT Chi Lăng • 12A10</b><small>Báo điểm KTĐK • Gửi phụ huynh qua Zalo</small></div></div>
       <div class="nav-sp"></div>
       <span class="chip" id="chipLan">Lần 1 → Lần 8 • 33 em</span>
+      <a class="btn-ghost" id="gk1Link" href="./gk1.html" style="display:none;text-decoration:none">📘 Giữa kì 1</a>
       <button class="btn-ghost" id="themeBtn" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
     </div>
     <h1>Báo điểm <span class="gold">12A10</span> — gửi PH theo từng đợt</h1>
@@ -195,7 +196,7 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
 <script src="./danhba-private.js" onerror="void 0"></script>
 <script>
 let LAN="Lần 8", lastMsg="", SEND_MODE="recent";
-const LANS=Object.keys(DATA);
+const LANS=Object.keys(DATA).filter(k=>k.startsWith("Lần "));
 /* Đợt mới: 3 Lần gần nhất, tự cuộn theo dữ liệu */
 const RECENT=(function(){
   return LANS.slice(-3);
@@ -417,6 +418,13 @@ async function copyAll(){
 document.getElementById("themeBtn").onclick=()=>{const h=document.documentElement;const n=h.getAttribute("data-theme")==="light"?"dark":"light";h.setAttribute("data-theme",n);saveTheme(n);};
 document.documentElement.setAttribute("data-theme",loadTheme());
 document.getElementById("gvcn").value=loadGVCN();
+/* Hiện nút "Giữa kì 1" chỉ khi data.js đã có điểm GK1 thật */
+(function(){
+  const g=DATA["Giữa kì 1"];
+  const keys=["toan","ly","anh","van","su","dia","hoa","sinh","tin","ktpl","gdqp"];
+  const has=Array.isArray(g)&&g.some(h=>h&&keys.some(k=>h[k]!=null));
+  if(has){const a=document.getElementById("gk1Link");if(a)a.style.display="inline-flex";}
+})();
 renderLan();render();
 </script>
 </body>
