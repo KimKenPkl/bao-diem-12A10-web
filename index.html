@@ -138,7 +138,7 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
       <button class="btn-ghost" id="themeBtn" aria-label="Đổi giao diện sáng/tối">◐ Giao diện</button>
     </div>
     <h1>Báo điểm <span class="gold">12A10</span> — gửi PH theo từng đợt</h1>
-    <p class="sub">Mặc định gửi <b>đợt mới: Lần 6 – 7 – 8</b> (3 lần gần nhất, tự cuộn khi có Lần mới). Vẫn có chế độ <b>đủ 8 Lần/tin</b> và <b>từng Lần riêng</b>. Mỗi Lần gói gọn <b>1 hàng</b> (Toán – Hoá – Sinh – Văn – Tổng B). <b>Web hiện xếp hạng</b> để thầy theo dõi, nhưng <b>tin nhắn + ảnh gửi PH không có xếp hạng</b>. Bấm copy / tải ảnh là gửi Zalo được ngay.</p>
+    <p class="sub">Mặc định gửi <b>đợt mới nhất: 3 Lần gần nhất</b> (tự cuộn khi có Lần mới). Vẫn có chế độ <b>đủ tất cả Lần/tin</b> và <b>từng Lần riêng</b>. Mỗi Lần gói gọn <b>1 hàng</b> (Toán – Hoá – Sinh – Văn – Tổng B). <b>Web hiện xếp hạng</b> để thầy theo dõi, nhưng <b>tin nhắn + ảnh gửi PH không có xếp hạng</b>. Bấm copy / tải ảnh là gửi Zalo được ngay.</p>
     <div class="stat-row">
       <div class="stat"><small>Sĩ số</small><b id="sSiso">33</b><span>lớp 12A10</span></div>
       <div class="stat"><small id="lblTBB">TB khối B (Lần 8)</small><b id="sTBB">—</b><span>Toán + Hoá + Sinh</span></div>
@@ -195,8 +195,10 @@ pre.msg{white-space:pre-wrap;background:var(--card2);border:1.5px dashed var(--i
 <script src="./data.js?v=20261108_1"></script>
 <script src="./danhba-private.js" onerror="void 0"></script>
 <script>
-let LAN="Lần 8", lastMsg="", SEND_MODE="recent";
+let lastMsg="", SEND_MODE="recent";
 const LANS=Object.keys(DATA).filter(k=>k.startsWith("Lần "));
+/* Mặc định = đợt mới nhất, tự đổi khi có Lần mới (không hard-code) */
+let LAN=LANS.length?LANS[LANS.length-1]:"";
 /* Đợt mới: 3 Lần gần nhất, tự cuộn theo dữ liệu */
 const RECENT=(function(){
   return LANS.slice(-3);

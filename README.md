@@ -89,6 +89,8 @@ python build_data.py --weekly "..." --force
 
 Chốt an toàn: sheet có tên học sinh **lệch** so với `data.js` hiện có sẽ **bị bỏ qua** (trừ khi `--force`) — tránh ghi đè nhầm khi file Excel đổi danh sách.
 
+Sau khi ghi `data.js`, script **tự tăng cache-buster** `data.js?v=<ngày_giờ>` trong `index.html` và `gk1.html` (bỏ qua bằng `--no-bump`) — nhờ đó trình duyệt/PH không còn thấy dữ liệu cũ sau khi push. Mặc định trang chủ cũng **tự lấy Lần mới nhất**, không hard-code.
+
 ## File trong repo
 
 - `index.html` — web tĩnh điểm tuần (không backend, mở offline vẫn chạy).

@@ -257,6 +257,25 @@ def dump_js(data: dict) -> str:
     return "\n".join(lines)
 
 
+def bump_cache_busters(folder, stamp=None):
+    """Tang ?v= cua data.js trong index.html / gk1.html de trinh duyet tai ban moi."""
+    import datetime
+    stamp = stamp or datetime.datetime.now().strftime("%Y%m%d_%H%M")
+    changed = []
+    for name in ("index.html", "gk1.html"):
+        p = os.path.join(folder, name)
+        if not os.path.exists(p):
+            continue
+        with open(p, "r", encoding="utf-8", newline="") as f:
+            raw = f.read()
+        new = re.sub(r"data\.js\?v=[0-9A-Za-z_\-]+", "data.js?v=" + stamp, raw)
+        if new != raw:
+            with open(p, "w", encoding="utf-8", newline="") as f:
+                f.write(new)
+            changed.append(name)
+    return changed, stamp
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Sinh data.js cho web bao diem 12A10")
     ap.add_argument("--weekly", help="File Excel bang diem tuan (nhieu sheet Lan N)")
@@ -265,6 +284,8 @@ def main(argv=None):
     ap.add_argument("--base", default=None, help="data.js cu de giu cac dot khong co trong Excel")
     ap.add_argument("--force", action="store_true",
                     help="Ghi de ca khi ten hoc sinh lech so voi data.js hien co")
+    ap.add_argument("--no-bump", action="store_true",
+                    help="Khong tu tang ?v= cua data.js trong index.html / gk1.html")
     args = ap.parse_args(argv)
 
     out_path = args.out
@@ -313,6 +334,14 @@ def main(argv=None):
     with open(out_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(js)
     print("Da ghi:", os.path.abspath(out_path), "(%d dot, %.1f KB)" % (len(ordered), len(js) / 1024))
+
+    # Tu tang ?v= de trinh duyet tai data.js moi (chi khi ghi dung file data.js)
+    if not args.no_bump and os.path.basename(out_path) == "data.js":
+        changed, stamp = bump_cache_busters(os.path.dirname(os.path.abspath(out_path)) or ".")
+        if changed:
+            print("Da tang cache-buster data.js?v=%s trong: %s" % (stamp, ", ".join(changed)))
+        else:
+            print("! Khong tim thay data.js?v=... de tang trong index.html / gk1.html")
 
 
 if __name__ == "__main__":
